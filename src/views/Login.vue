@@ -1,14 +1,15 @@
 <template>
     <div>
-        <Particles id="tsparticles" :options="options" />
+        <Particles id="tsparticles" :particlesInit="particlesInit" :particlesLoaded="particlesLoaded" :options="options" />
         <div class="formContainer">
+            <h3>企业门户网站管理系统</h3>
             <el-form
                 ref="loginFormRef"
                 :model="loginForm"
                 status-icon
                 :rules="rules"
-                label-width="120px"
-                class="demo-ruleForm"
+                label-width="80px"
+                class="loginForm"
             >
                 <el-form-item label="用户名" prop="username">
                     <el-input v-model="loginForm.username" autocomplete="off" />
@@ -34,6 +35,15 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import { loadFull } from "tsparticles";
+
+const particlesInit = async engine => {
+    await loadFull(engine);
+};
+
+const particlesLoaded = async container => {
+    console.log("Particles container loaded", container);
+};
 
 const options = {
     background: {
@@ -157,6 +167,15 @@ const resetForm = (formEl) => {
     background-color: rgba($color: #000000, $alpha: 0.5);
     color: white;
     text-align: center;
+    padding: 20px;
+
+    h3{
+        font-size: 30px;
+    }
+    
+    .loginForm{
+        margin-top: 20px;
+    }
 }
 
 ::v-deep .el-form-item__label {
